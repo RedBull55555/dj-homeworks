@@ -1,19 +1,50 @@
-{% extends "base.html" %}
 {% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Каталог</title>
 
-{% block title %}Каталог{% endblock %}
-{% block content %}
-    <div class="container">
-        <div class="header">
-            <h1><a href="/catalog">Каталог</a></h1>
-        </div>
+    <!-- ✅ ПРАВИЛЬНЫЕ ПУТИ И ПРАВИЛЬНОЕ МЕСТО -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
 
-        <div class="sort-block">
-            {# Здесь должен быть раздел с сортировкой #}
-        </div>
+<body>
 
-        <div class="content">
-            {# Здесь должен отображаться каталог с телефонами #}
+<div class="container">
+
+    <div class="row header">
+        <div class="col">
+            <h1>Каталог</h1>
         </div>
     </div>
-{% endblock %}
+
+    <div class="row sort-block">
+        <div class="col">
+            Сортировать по:
+            <a class="sort-item" href="?sort=name">названию</a>
+            <a class="sort-item" href="?sort=min_price">начиная с дешёвых</a>
+            <a class="sort-item" href="?sort=max_price">начиная с дорогих</a>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for phone in phones %}
+            <div class="col-4 phone">
+                <a href="{% url 'phone_detail' phone.slug %}">
+                    <h2>{{ phone.name }}</h2>
+                </a>
+
+                <div class="price">Стоимость: {{ phone.price }} ₽</div>
+
+                <img src="{{ phone.image }}" alt="{{ phone.name }}" class="img-fluid">
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>
